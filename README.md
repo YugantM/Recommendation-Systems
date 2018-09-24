@@ -1,5 +1,4 @@
-# Reommendation-Systems
-different types of recommendation systems
+# Reommendation-System
 
 please read the comments in the code for understanding.
 
