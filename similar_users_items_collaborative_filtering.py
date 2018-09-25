@@ -4,7 +4,6 @@
 import pandas as pd
 import numpy as np
 import math
-from scipy import spatial
 
 Ratings=pd.read_csv('ratings.csv',encoding='ISO-8859-1')
 Movies=pd.read_csv('movies.csv',encoding='ISO-8859-1')
