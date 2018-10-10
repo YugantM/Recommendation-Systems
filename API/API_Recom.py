@@ -5,27 +5,36 @@
 
 
 import os,json,MySQLdb,pandas as pd
-from flask import Flask, request, redirect, url_for, flash
+from flask import Flask, request, redirect, url_for, flash,send_from_directory,render_template
 from werkzeug.utils import secure_filename
 from sklearn.metrics.pairwise import cosine_similarity
 from werkzeug.utils import secure_filename
 
-
 # In[54]:
 
 
-UPLOAD_FOLDER = ''
-ALLOWED_EXTENSIONS = set(['csv'])
-
 app = Flask(__name__)
+
+
+@app.route('/upload')
+def upload_file():
+    with open ('ui_recom.html')as f:
+        return f.read()
+    
+    
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_files():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save('user_uploaded_file.csv')
+    return 'file uploaded successfully'
+
   
-@app.route("/upload", methods=['GET', 'POST'])
+@app.route("/train", methods=['GET', 'POST'])
 def train():
     global base_threshold,user_matrix,item_matrix,u2u,i2i
-    connection = MySQLdb.connect(host="localhost",user="root", passwd="root",db="python")  
-    query="SELECT uId,iId,rating FROM ratings"
-    ratings= pd.read_sql(query,connection)
-    connection.close()
+    ratings = pd.read_csv('user_uploaded_file.csv')
+    ratings.columns = ["uId", "iId", "rating"]
     user_matrix = ratings.pivot(index='uId', columns='iId', values='rating')
     #user_matrix = user_matrix.apply(lambda v: v.apply(lambda x:x if x!=0.2 else 0) )
     suggested_items = pd.DataFrame(0,index=user_matrix.columns.tolist(),columns=['similarity'])
@@ -47,10 +56,9 @@ def result():
     suggested_items = result.max(axis=0)
     suggested_items = suggested_items.drop(labels=rated_by_u_temp)
     suggested_items = suggested_items[suggested_items>=threshold]
-    suggested_items = suggested_items.sort_values().to_json(orient='records')
+    suggested_items = suggested_items.to_json(orient='index')
     return suggested_items
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5000,debug=True)
-
+    app.run(host='0.0.0.0',debug=True)
