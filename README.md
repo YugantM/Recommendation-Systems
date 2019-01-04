@@ -24,6 +24,13 @@
 <li>Threshold will control the amount of data which will be retrieved from the Weighted User-Item matrix. This retrieved data is the list of recommendation.</li>
 
 </ul>
+
+# Demo Case:
+<img src="step1.PNG" alt="step1" style="float: left; margin-right: 10px;" />
+<img src="step2.PNG" alt="step2" style="float: left; margin-right: 10px;" />
+<img src="step3.PNG" alt="step3" style="float: left; margin-right: 10px;" />
+<img src="step4.PNG" alt="step4" style="float: left; margin-right: 10px;" />
+
 Follow the below link for algorithm and theory:
 https://en.wikipedia.org/wiki/Item-item_collaborative_filtering
 https://patents.google.com/patent/US6266649
