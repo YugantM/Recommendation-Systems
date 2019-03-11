@@ -1,4 +1,4 @@
-# Reommendation-Systems
+# Recommendation-Systems
 
 ## Following diagram represents the core elements of the engine:
 <img src="rec_diagram.PNG" alt="diagram" style="float: left; margin-right: 10px;" />
